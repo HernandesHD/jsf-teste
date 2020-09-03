@@ -7,17 +7,17 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
-public class Usuario implements Serializable {
-	
+public class Tarefa implements Serializable {
+
 	private static final long serialVersionUID = 1L;
-		
+	
 	@Id
 	@GeneratedValue
 	private Integer id;
-
-	private String nomeDeUsuario;
 	
-	private String senha;
+	private boolean status;
+	
+	private String descricao;
 	
 	//GETTERS AND SETTERS
 
@@ -29,22 +29,21 @@ public class Usuario implements Serializable {
 		this.id = id;
 	}
 
-	public String getNomeDeUsuario() {
-		return nomeDeUsuario;
+	public boolean isStatus() {
+		return status;
 	}
 
-	public void setNomeDeUsuario(String nomeDeUsuario) {
-		this.nomeDeUsuario = nomeDeUsuario;
+	public void setStatus(boolean status) {
+		this.status = status;
 	}
 
-	public String getSenha() {
-		return senha;
+	public String getDescricao() {
+		return descricao;
 	}
 
-	public void setSenha(String senha) {
-		this.senha = senha;
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
 	}
-	
 	
 	
 	
