@@ -52,13 +52,13 @@ public class TaskListBean implements Serializable {
 		return new DAO<QuadroDeTarefa>(QuadroDeTarefa.class).listaTodos();
 	}
 	
-	public void salvarNoBanco() {	
+	public String salvarNoBanco() {	
 		
 		quadroDeTarefa.setTarefas(tarefasInput);
 		
-		if(quadroDeTarefa.getTarefas().isEmpty() || quadroDeTarefa.getTarefas() == null) {
+		if(this.tarefasInput.isEmpty() || this.tarefasInput == null) {
 			FacesContext.getCurrentInstance().addMessage("tarefa", new FacesMessage("Deve adicionar no minimo uma tarefa."));
-			return;
+			return null;
 		}
 
 		if(this.quadroDeTarefa.getId() == null) {
@@ -69,8 +69,12 @@ public class TaskListBean implements Serializable {
 		}
 		
 		this.quadroDeTarefa = new QuadroDeTarefa();
+		this.tarefasInput = new ArrayList<Tarefa>();
 		//this.quadroDeTarefa.setTarefas(new ArrayList<Tarefa>());
 		
+		return "listar?faces-redirect=true";
+		
 	}
+	
 
 }

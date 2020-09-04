@@ -10,3 +10,7 @@ body {
 .nav-link {
 	color: #FFFFFF !important;
 }
+
+.value {
+    font-weight: bold;
+}
