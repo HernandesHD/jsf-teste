@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+    
+    <ui:composition template="_template.xhtml">
+		<ui:define name="titulo">
+			Cadastrar novo quadro de tarefa(s)
+		</ui:define>
+		
+		<ui:define name="conteudo">
+			<h:form id="quadroTarefaForm">
+				<p:messages></p:messages>
+				
+			    <div class="form-row">
+			        <div class="form-group col-md-6 mx-auto">
+			            <p:outputLabel for="titulo" value="Titulo do quadro" />
+			            <p:inputText id="titulo" class="form-control" value="#{taskListBean.quadroDeTarefa.titulo}" required="true" requiredMessage="Título obrigatório." validatorMessage="Título não pode ser superior a 40.">
+			            	<f:validateLength maximum="40" />
+			            </p:inputText>
+			        </div>
+			    </div>
+			    
+			    <div class="form-row">
+					<div class="form-group col-md-6 mx-auto">
+			        	<p:growl id="msgs" showDetail="true" skipDetailIfEqualsSummary="true" />
+					    
+				        <p:outputLabel for="mask" value="Data:" /><br />
+				        <p:calendar id="mask" value="#{taskListBean.quadroDeTarefa.dataDeCriacao}" pattern="dd-MM-yyyy" mask="true"  required="true" />
+					    
+			        </div>
+				</div>
+				
+				<div class="form-row">
+			        <div class="form-group col-md-6 mx-auto">
+			            <p:outputLabel for="descricao" value="Descrição do quadro" />
+			            <p:inputText id="descricao" class="form-control" value="#{taskListBean.quadroDeTarefa.descricao}" />
+			        </div>
+			    </div>
+			    
+			    <div class="form-row">
+			    	<div class="form-group col-md-6 mx-auto">
+			    		<ui:repeat value="#{taskListBean.tarefasInput}" varStatus="loop" var="item">
+					        <p:outputLabel for="foo" value="Tarefa: #{loop.index}" /><br />
+					        <p:inputText id="foo" class="form-control teste#{loop.index}" value="#{item.descricao}" />
+					        <p:commandButton value="Remove" action="#{taskListBean.remove(item)}" update="@form" />
+					        <br/>
+					    </ui:repeat>
+					    <br />
+					    <p:commandButton value="Adicionar Tarefa" action="#{taskListBean.adicionaInput}" update="@form" />
+			    	</div>
+			    </div>
+			 
+			 	<div class="form-row">
+					<div class="form-group col-md-6 mx-auto">
+				    	<p:commandButton value="Cadastrar" action="#{taskListBean.salvarNoBanco}" update="@form" />
+				 	</div>
+			 	</div>
+			</h:form>	
+		</ui:define>
+	</ui:composition>
+
+</html>
