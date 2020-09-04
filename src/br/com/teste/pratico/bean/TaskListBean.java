@@ -6,9 +6,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
+import javax.persistence.EntityManager;
 
+import br.com.teste.pratico.dao.DAO;
+import br.com.teste.pratico.dao.JPAUtil;
 import br.com.teste.pratico.modelo.QuadroDeTarefa;
 import br.com.teste.pratico.modelo.Tarefa;
 
@@ -43,22 +48,29 @@ public class TaskListBean implements Serializable {
 		return quadroDeTarefa;
 	}
 	
-	public void salvarNoBanco() {
-		System.out.println("ID: " + this.quadroDeTarefa.getId());
-		System.out.println("Titulo: " + this.quadroDeTarefa.getTitulo());
-		
-		//Formata a data
-		DateFormat formataData = DateFormat.getDateInstance();
-		
-		System.out.println("Data de criação: " + formataData.format(this.quadroDeTarefa.getDataDeCriacao()));
-		System.out.println("Status: " + this.quadroDeTarefa.isStatus());
-		System.out.println("Descrição: " + this.quadroDeTarefa.getDescricao());
+	public List<QuadroDeTarefa> getQuadros() {
+		return new DAO<QuadroDeTarefa>(QuadroDeTarefa.class).listaTodos();
+	}
+	
+	public void salvarNoBanco() {	
 		
 		quadroDeTarefa.setTarefas(tarefasInput);
 		
-		for (Tarefa tarefa : this.quadroDeTarefa.getTarefas()) {
-			System.out.println("Tarefas: " + tarefa.getDescricao());
+		if(quadroDeTarefa.getTarefas().isEmpty() || quadroDeTarefa.getTarefas() == null) {
+			FacesContext.getCurrentInstance().addMessage("tarefa", new FacesMessage("Deve adicionar no minimo uma tarefa."));
+			return;
 		}
+
+		if(this.quadroDeTarefa.getId() == null) {
+			new DAO<QuadroDeTarefa>(QuadroDeTarefa.class).adiciona(this.quadroDeTarefa);
+		} else {
+			new DAO<QuadroDeTarefa>(QuadroDeTarefa.class).adiciona(this.quadroDeTarefa);
+
+		}
+		
+		this.quadroDeTarefa = new QuadroDeTarefa();
+		//this.quadroDeTarefa.setTarefas(new ArrayList<Tarefa>());
+		
 	}
 
 }

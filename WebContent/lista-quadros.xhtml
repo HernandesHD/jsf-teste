@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+    
+<h:head>
+	<!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous" />
+	
+	<h:outputStylesheet library="css" name="estilos.css"/>
+</h:head>
+
+<h:body>
+	
+	<nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color: #14a30d !important; color: #FFFFFF !important; text-transform: uppercase;">
+		<div class="container">
+			<a class="navbar-brand" href="#">TaskList</a>
+		  	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+		    	<span class="navbar-toggler-icon"></span>
+		  	</button>
+		  	<div class="collapse navbar-collapse" id="navbarNav">
+		    	<ul class="navbar-nav mx-auto justify-content-center">
+		      		<li class="nav-item active">
+		        		<a class="nav-link" href="#">Inicio <span class="sr-only">(current)</span></a>
+		      		</li>
+		      		<li class="nav-item">
+		        		<a class="nav-link" href="#">Cadastrar</a>
+		      		</li>
+					<li class="nav-item">
+				  		<a class="nav-link" href="#">Listar</a>
+					</li>
+		    	</ul>
+		  	</div>
+	  	</div>
+	</nav>
+	<br /><br />
+	<div class="container">
+		
+		<div class="row">
+			<div class="col-md-12">
+				 <h3 class="text-center text-uppercase">Quadros de Tarefas</h3>
+			</div>
+		</div>
+		<br />
+		
+		<h:form id="formTabelaQuadros">
+		<div class="row">
+				<ui:repeat value="#{taskListBean.quadros}" var="quadro" id="tabelaQuadros">
+					<div class="col-md-4">
+						<div class="card text-center">
+							<div class="card-header">
+						    	<h:outputText value="#{quadro.titulo}" /><br />
+						    	<small><h:outputText value="#{quadro.id}" /></small>
+						  	</div>
+						  	<div class="card-body">
+						    	<h5 class="card-title">Descrição:</h5>
+						    	<p><h:outputText value="#{quadro.descricao}" /></p>
+						    	<h5 class="card-title">Tarefas:</h5>
+							    <ul class="list-group">
+							    	<ui:repeat value="#{quadro.tarefas}" var="tarefa" id="tabelaTarefa">
+							    		<li class="list-group-item"><h:outputText value="#{tarefa.descricao}" /></li>
+							    	</ui:repeat>
+							    </ul>
+							    <br />
+						    	<h5 class="card-title">Status:</h5>
+						    	<p class="card-text"><h:outputText value="#{quadro.status}" /></p>
+						    	<a href="#" class="btn btn-primary">Editar</a>
+						    	<a href="#" class="btn btn-danger">Excluir</a>
+						  	</div>
+						  	<div class="card-footer text-muted">
+						  		<h5 class="card-title">Data:</h5>
+								<h:outputText value="#{quadro.dataDeCriacao}" >
+								<f:convertDateTime pattern="dd/MM/yyyy"
+									timeZone="America/Sao_Paulo" />
+								</h:outputText>
+						  	</div>
+						</div>
+					</div>
+				</ui:repeat>
+		</div>
+		</h:form>
+		
+	</div>
+	
+	 <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+
+</h:body>
+
+</html>
