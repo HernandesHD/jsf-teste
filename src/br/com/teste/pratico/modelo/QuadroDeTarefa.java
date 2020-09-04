@@ -1,8 +1,9 @@
 package br.com.teste.pratico.modelo;
 
 import java.io.Serializable;
+import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -24,10 +25,10 @@ public class QuadroDeTarefa implements Serializable {
 	private String titulo;
 	
 	@Temporal(TemporalType.DATE)
-	private Calendar dataDeCriacao = Calendar.getInstance();
+	private Date dataDeCriacao = new Date();
 	
-	private String Descricao;
-	
+	private String descricao;
+
 	@OneToMany()
 	private List<Tarefa> tarefas = new ArrayList<Tarefa>();
 	
@@ -51,20 +52,23 @@ public class QuadroDeTarefa implements Serializable {
 		this.titulo = titulo;
 	}
 
-	public Calendar getDataDeCriacao() {
+	public Date getDataDeCriacao() {
 		return dataDeCriacao;
 	}
 
-	public void setDataDeCriacao(Calendar dataDeCriacao) {
+	public void setDataDeCriacao(Date dataDeCriacao) {
+		//Formata a data
+		DateFormat formataData = DateFormat.getDateInstance();
+		formataData.format(dataDeCriacao);
 		this.dataDeCriacao = dataDeCriacao;
 	}
 
 	public String getDescricao() {
-		return Descricao;
+		return descricao;
 	}
 
 	public void setDescricao(String descricao) {
-		Descricao = descricao;
+		this.descricao = descricao;
 	}
 
 	public List<Tarefa> getTarefas() {
@@ -81,8 +85,6 @@ public class QuadroDeTarefa implements Serializable {
 
 	public void setStatus(boolean status) {
 		this.status = status;
-	}
-	
-	
+	}	
 
 }

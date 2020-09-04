@@ -3,35 +3,169 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
     
 <h:head>
 	<!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous" />
+	
+	<h:outputStylesheet library="css" name="estilos.css"/>
 </h:head>
 
+<script type="text/javascript">
+    PrimeFaces.locales['es'] = {
+        closeText: 'Cerrar',
+        prevText: 'Anterior',
+        nextText: 'Siguiente',
+        monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+        monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+        dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+        dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
+        dayNamesMin: ['D', 'L', 'M', 'X', 'J', 'V', 'S'],
+        weekHeader: 'Semana',
+        firstDay: 1,
+        isRTL: false,
+        showMonthAfterYear: false,
+        yearSuffix: '',
+        timeOnlyTitle: 'Sólo hora',
+        timeText: 'Tiempo',
+        hourText: 'Hora',
+        minuteText: 'Minuto',
+        secondText: 'Segundo',
+        currentText: 'Fecha actual',
+        ampm: false,
+        month: 'Mes',
+        week: 'Semana',
+        day: 'Día',
+        allDayText: 'Todo el día'
+    };
+    PrimeFaces.locales ['de'] = {
+        closeText: 'Schließen',
+        prevText: 'Zurück',
+        nextText: 'Weiter',
+        monthNames: ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember' ],
+        monthNamesShort: ['Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez' ],
+        dayNames: ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'],
+        dayNamesShort: ['Son', 'Mon', 'Die', 'Mit', 'Don', 'Fre', 'Sam'],
+        dayNamesMin: ['S', 'M', 'D', 'M ', 'D', 'F ', 'S'],
+        weekHeader: 'Woche',
+        firstDay: 1,
+        isRTL: false,
+        showMonthAfterYear: false,
+        yearSuffix:'',
+        timeOnlyTitle: 'Nur Zeit',
+        timeText: 'Zeit',
+        hourText: 'Stunde',
+        minuteText: 'Minute',
+        secondText: 'Sekunde',
+        currentText: 'Aktuelles Datum',
+        ampm: false,
+        month: 'Monat',
+        week: 'Woche',
+        day: 'Tag',
+        allDayText: 'Ganzer Tag'
+    };
+</script>
+ 
+<script type="text/javascript">
+    //<![CDATA[
+    function dateTemplateFunc(date) {
+        return '<span style="background-color:' + ((date.day < 21 && date.day > 10) ? '#81C784' : 'inherit') + ';border-radius:50%;padding: .25em;width: 1.75em; height:1.75em; display:block;">' + date.day + '</span>';
+    }
+    //]]>
+</script>
+ 
+<style type="text/css">
+    .value {
+        font-weight: bold;
+    }
+</style>
+
 <h:body>
+	
+	<nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color: #14a30d !important; color: #FFFFFF !important; text-transform: uppercase;">
+		<div class="container">
+			<a class="navbar-brand" href="#">TaskList</a>
+		  	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+		    	<span class="navbar-toggler-icon"></span>
+		  	</button>
+		  	<div class="collapse navbar-collapse" id="navbarNav">
+		    	<ul class="navbar-nav mx-auto justify-content-center">
+		      		<li class="nav-item active">
+		        		<a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+		      		</li>
+		      		<li class="nav-item">
+		        		<a class="nav-link" href="#">Features</a>
+		      		</li>
+					<li class="nav-item">
+				  		<a class="nav-link" href="#">Pricing</a>
+					</li>
+		    	</ul>
+		  	</div>
+	  	</div>
+	</nav>
+	<br /><br />
 	<div class="container">
-		<h1>Teste</h1>
+		<h:form id="quadroTarefaForm">
+			<div class="row">
+				<div class="col-md-12">
+					 <h3 class="text-center">Cadastrar novo quadro de tarefa(s)</h3>
+				</div>
+			</div>
+			<br /><br />
+		    <div class="form-row">
+		        <div class="form-group col-md-6 mx-auto">
+		            <p:outputLabel for="titulo" value="Titulo do quadro" />
+		            <p:inputText id="titulo" class="form-control" value="#{taskListBean.quadroDeTarefa.titulo}" />
+		        </div>
+		    </div>
+		    
+		    <div class="form-row">
+				<div class="form-group col-md-6 mx-auto">
+		        	<p:growl id="msgs" showDetail="true" skipDetailIfEqualsSummary="true" />
+				    
+			        <p:outputLabel for="mask" value="Data:" /><br />
+			        <p:calendar id="mask" value="#{taskListBean.quadroDeTarefa.dataDeCriacao}" pattern="dd-MM-yyyy" mask="true" />
+				    
+		        </div>
+			</div>
+			
+			<div class="form-row">
+		        <div class="form-group col-md-6 mx-auto">
+		            <p:outputLabel for="descricao" value="Descrição do quadro" />
+		            <p:inputText id="descricao" class="form-control" value="#{taskListBean.quadroDeTarefa.descricao}" />
+		        </div>
+		    </div>
+		    
+		    <div class="form-row">
+		    	<div class="form-group col-md-6 mx-auto">
+		    		<ui:repeat value="#{taskListBean.tarefasInput}" varStatus="loop" var="item">
+				        <p:outputLabel for="foo" value="Tarefa: #{loop.index}" /><br />
+				        <p:inputText id="foo" class="form-control teste#{loop.index}" value="#{item.descricao}" />
+				        <p:commandButton value="Remove" action="#{taskListBean.remove(item)}" update="@form" />
+				        <br/>
+				    </ui:repeat>
+				    <br />
+				    <p:commandButton value="Adicionar Tarefa" action="#{taskListBean.adicionaInput}" update="@form" />
+		    	</div>
+		    </div>
+		 
+		 	<div class="form-row">
+				<div class="form-group col-md-6 mx-auto">
+			    	<p:commandButton value="Cadastrar" action="#{taskListBean.salvarNoBanco}" />
+			 	</div>
+		 	</div>
+		</h:form>	
+		
 	</div>
-	
-	<p:menu>
-	    <p:menuitem value="Gmail" url="http://www.google.com" />
-	    <p:menuitem value="Hotmail" url="http://www.hotmail.com" />
-	    <p:menuitem value="Yahoo Mail" url="http://mail.yahoo.com" />
-	    <p:menuitem value="Youtube" url="http://www.youtube.com" />
-	    <p:menuitem value="Break" url="http://www.break.com" />
-	    <p:menuitem value="Metacafe" url="http://www.metacafe.com" />
-	    <p:menuitem value="Facebook" url="http://www.facebook.com" />
-	    <p:menuitem value="MySpace" url="http://www.myspace.com" />
-	</p:menu>
-	
 	
 	 <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+
 </h:body>
 
 </html>
