@@ -42,7 +42,7 @@ public class QuadroDeTarefa implements Serializable {
 	private List<Tarefa> tarefas = new ArrayList<Tarefa>();
 	
 	@Enumerated(EnumType.STRING)
-	private TipoStatus status;
+	private TipoStatus status = TipoStatus.ANDAMENTO;
 
 	//GETTERS AND SETTERS
 	

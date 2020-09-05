@@ -14,6 +14,7 @@ import javax.persistence.EntityManager;
 
 import br.com.teste.pratico.dao.DAO;
 import br.com.teste.pratico.dao.JPAUtil;
+import br.com.teste.pratico.enums.TipoStatus;
 import br.com.teste.pratico.modelo.QuadroDeTarefa;
 import br.com.teste.pratico.modelo.Tarefa;
 
@@ -26,11 +27,21 @@ public class TaskListBean implements Serializable {
 	private QuadroDeTarefa quadroDeTarefa = new QuadroDeTarefa();
 	private List<Tarefa> tarefasInput;
 	
+	private boolean valueCheckBox;
+	
 	@PostConstruct
 	public void init() {
 		tarefasInput = new ArrayList<Tarefa>();
 	}
 	
+	public boolean isValueCheckBox() {
+		return valueCheckBox;
+	}
+
+	public void setValueCheckBox(boolean valueCheckBox) {
+		this.valueCheckBox = valueCheckBox;
+	}
+
 	public void adicionaInput() {
 		tarefasInput.add(new Tarefa());
 	}
@@ -92,5 +103,15 @@ public class TaskListBean implements Serializable {
 		this.quadroDeTarefa = new QuadroDeTarefa();
 		this.tarefasInput = new ArrayList<Tarefa>();
 	}
+	
+	public void concluiQuadro(QuadroDeTarefa quadroDeTarefa) {
+		if(valueCheckBox) {
+			quadroDeTarefa.setStatus(TipoStatus.CONCLUIDO);
+			new DAO<QuadroDeTarefa>(QuadroDeTarefa.class).atualiza(quadroDeTarefa);
+		} else {
+			quadroDeTarefa.setStatus(TipoStatus.ANDAMENTO);
+			new DAO<QuadroDeTarefa>(QuadroDeTarefa.class).atualiza(quadroDeTarefa);
+		}
+    }
 
 }

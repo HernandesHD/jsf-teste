@@ -15,6 +15,7 @@
 		<ui:define name="conteudo">
 		
 			<h:form id="formTabelaQuadros">
+				<p:growl id="msg" />
 				<div class="row">
 					<ui:repeat value="#{taskListBean.quadros}" var="quadro" id="tabelaQuadros">
 						<div class="col-md-4" style="margin-bottom: 50px !important;">
@@ -22,7 +23,9 @@
 								<div class="card-header">
 							    	<h:outputText value="#{quadro.titulo}" /><br />
 							    	<small><h:outputText value="#{quadro.id}" /></small><br />
-							    	<p:selectBooleanCheckbox value="#{selectBooleanView.value1}" itemLabel="Finalizar" />
+							    	<p:selectBooleanCheckbox value="#{taskListBean.valueCheckBox}" itemLabel="Finalizar">
+							    		<p:ajax update="@form" listener="#{taskListBean.concluiQuadro(quadro)}" />
+							    	</p:selectBooleanCheckbox>
 							  	</div>
 							  	<div class="card-body">
 							    	<h5 class="card-title">Descrição:</h5>
@@ -35,7 +38,7 @@
 								    </ul>
 								    <br />
 							    	<h5 class="card-title">Status:</h5>
-							    	<p class="card-text"><h:outputText value="#{quadro.status}" /></p>
+							    	<p id="statusQuadro" class="card-text alert #{taskListBean.valueCheckBox ? 'alert-success' : 'alert-danger'}"><h:outputText value="#{quadro.status}" /></p>
 
 							    	<h:commandButton value="Editar" action="#{taskListBean.carregar(quadro)}" update="@form" class="btn btn-sm btn-primary" />
 							    	&nbsp;
@@ -55,7 +58,6 @@
 			</h:form>
 		
 		</ui:define>
-		
 	</ui:composition>
 
 </html>
