@@ -17,13 +17,13 @@
 			<h:form id="formTabelaQuadros">
 				<p:growl id="msg" />
 				<div class="row">
-					<ui:repeat value="#{taskListBean.quadros}" var="quadro" id="tabelaQuadros">
+					<ui:repeat value="#{taskListBean.quadros}" var="quadro" varStatus="loop" id="tabelaQuadros">
 						<div class="col-md-4" style="margin-bottom: 50px !important;">
 							<div class="card text-center">
 								<div class="card-header">
 							    	<h:outputText value="#{quadro.titulo}" /><br />
 							    	<small><h:outputText value="#{quadro.id}" /></small><br />
-							    	<p:selectBooleanCheckbox value="#{taskListBean.valueCheckBox}" itemLabel="Finalizar">
+							    	<p:selectBooleanCheckbox value="#{taskListBean.valueCheckBox}" itemLabel="Concluído" onclick="console.log('teste')">
 							    		<p:ajax update="@form" listener="#{taskListBean.concluiQuadro(quadro)}" />
 							    	</p:selectBooleanCheckbox>
 							  	</div>
@@ -38,7 +38,7 @@
 								    </ul>
 								    <br />
 							    	<h5 class="card-title">Status:</h5>
-							    	<p id="statusQuadro" class="card-text alert #{taskListBean.valueCheckBox ? 'alert-success' : 'alert-danger'}"><h:outputText value="#{quadro.status}" /></p>
+							    	<p id="statusQuadro" class="card-text alert #{quadro.status == 'CONCLUIDO' ? 'alert-success' : 'alert-danger'}"><h:outputText value="#{quadro.status}" /></p>
 
 							    	<h:commandButton value="Editar" action="#{taskListBean.carregar(quadro)}" update="@form" class="btn btn-sm btn-primary" />
 							    	&nbsp;
