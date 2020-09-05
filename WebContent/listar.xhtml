@@ -23,7 +23,7 @@
 								<div class="card-header">
 							    	<h:outputText value="#{quadro.titulo}" /><br />
 							    	<small><h:outputText value="#{quadro.id}" /></small><br />
-							    	<p:selectBooleanCheckbox value="#{taskListBean.valueCheckBox}" itemLabel="Concluído" onclick="console.log('teste')">
+							    	<p:selectBooleanCheckbox value="#{taskListBean.valueCheckBox}" itemLabel="Concluído" varStatus="status">
 							    		<p:ajax update="@form" listener="#{taskListBean.concluiQuadro(quadro)}" />
 							    	</p:selectBooleanCheckbox>
 							  	</div>

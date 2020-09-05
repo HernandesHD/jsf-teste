@@ -10,7 +10,6 @@
 		
 		<class>br.com.teste.pratico.modelo.QuadroDeTarefa</class>
 		<class>br.com.teste.pratico.modelo.Tarefa</class>
-		<class>br.com.teste.pratico.modelo.Usuario</class>
 
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
