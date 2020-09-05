@@ -33,7 +33,6 @@ public class TaskListBean implements Serializable {
 	
 	public void adicionaInput() {
 		tarefasInput.add(new Tarefa());
-		System.out.println(tarefasInput.size());
 	}
 	
 	public void remove(Tarefa inputTarefa) {
@@ -64,17 +63,34 @@ public class TaskListBean implements Serializable {
 		if(this.quadroDeTarefa.getId() == null) {
 			new DAO<QuadroDeTarefa>(QuadroDeTarefa.class).adiciona(this.quadroDeTarefa);
 		} else {
-			new DAO<QuadroDeTarefa>(QuadroDeTarefa.class).adiciona(this.quadroDeTarefa);
+			new DAO<QuadroDeTarefa>(QuadroDeTarefa.class).atualiza(this.quadroDeTarefa);
 
 		}
 		
 		this.quadroDeTarefa = new QuadroDeTarefa();
 		this.tarefasInput = new ArrayList<Tarefa>();
-		//this.quadroDeTarefa.setTarefas(new ArrayList<Tarefa>());
 		
 		return "listar?faces-redirect=true";
 		
 	}
 	
+	public void remover(QuadroDeTarefa quadroDeTarefa) {
+		new DAO<QuadroDeTarefa>(QuadroDeTarefa.class).remove(quadroDeTarefa);
+	}
+	
+	public String carregar(QuadroDeTarefa quadroDeTarefa) {
+		this.quadroDeTarefa = quadroDeTarefa;
+		for(Tarefa tarefa : this.quadroDeTarefa.getTarefas()) {
+			adicionaInput();
+		}
+		tarefasInput = this.getQuadroDeTarefa().getTarefas();
+		
+		return "cadastrar?faces-redirect=true";
+	}
+	
+	public void limparForm() {
+		this.quadroDeTarefa = new QuadroDeTarefa();
+		this.tarefasInput = new ArrayList<Tarefa>();
+	}
 
 }

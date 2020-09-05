@@ -2,12 +2,16 @@ package br.com.teste.pratico.modelo;
 
 import java.io.Serializable;
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -16,8 +20,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
+import br.com.teste.pratico.enums.TipoStatus;
 
 @Entity
 public class QuadroDeTarefa implements Serializable {
@@ -31,14 +34,15 @@ public class QuadroDeTarefa implements Serializable {
 	private String titulo;
 	
 	@Temporal(TemporalType.DATE)
-	private Date dataDeCriacao = new Date();
+	private Calendar dataDeCriacao = Calendar.getInstance();
 	
 	private String descricao;
 
-	@OneToMany(cascade = CascadeType.PERSIST, fetch=FetchType.EAGER)
+	@OneToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
 	private List<Tarefa> tarefas = new ArrayList<Tarefa>();
 	
-	private boolean status;
+	@Enumerated(EnumType.STRING)
+	private TipoStatus status;
 
 	//GETTERS AND SETTERS
 	
@@ -58,14 +62,14 @@ public class QuadroDeTarefa implements Serializable {
 		this.titulo = titulo;
 	}
 
-	public Date getDataDeCriacao() {
+	public Calendar getDataDeCriacao() {
 		return dataDeCriacao;
 	}
 
-	public void setDataDeCriacao(Date dataDeCriacao) {
+	public void setDataDeCriacao(Calendar dataDeCriacao) {
 		//Formata a data
-		DateFormat formataData = DateFormat.getDateInstance();
-		formataData.format(dataDeCriacao);
+		DateFormat formataData = new SimpleDateFormat("dd/MM/yyyy");
+		formataData.format(dataDeCriacao.getTime());
 		this.dataDeCriacao = dataDeCriacao;
 	}
 
@@ -85,12 +89,12 @@ public class QuadroDeTarefa implements Serializable {
 		this.tarefas = tarefas;
 	}
 
-	public boolean isStatus() {
+	public TipoStatus getStatus() {
 		return status;
 	}
 
-	public void setStatus(boolean status) {
+	public void setStatus(TipoStatus status) {
 		this.status = status;
-	}	
+	}
 
 }

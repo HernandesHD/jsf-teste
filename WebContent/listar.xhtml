@@ -21,7 +21,8 @@
 							<div class="card text-center">
 								<div class="card-header">
 							    	<h:outputText value="#{quadro.titulo}" /><br />
-							    	<small><h:outputText value="#{quadro.id}" /></small>
+							    	<small><h:outputText value="#{quadro.id}" /></small><br />
+							    	<p:selectBooleanCheckbox value="#{selectBooleanView.value1}" itemLabel="Finalizar" />
 							  	</div>
 							  	<div class="card-body">
 							    	<h5 class="card-title">Descrição:</h5>
@@ -35,12 +36,14 @@
 								    <br />
 							    	<h5 class="card-title">Status:</h5>
 							    	<p class="card-text"><h:outputText value="#{quadro.status}" /></p>
-							    	<a href="#" class="btn btn-primary">Editar</a>
-							    	<a href="#" class="btn btn-danger">Excluir</a>
+
+							    	<h:commandButton value="Editar" action="#{taskListBean.carregar(quadro)}" update="@form" class="btn btn-sm btn-primary" />
+							    	&nbsp;
+							    	<h:commandButton value="Excluir" action="#{taskListBean.remover(quadro)}" update="@form" class="btn btn-sm btn-danger" />
 							  	</div>
 							  	<div class="card-footer text-muted">
-							  		<h5 class="card-title">Data:</h5>
-									<h:outputText value="#{quadro.dataDeCriacao}" >
+							  		<h5 class="card-title">Data de criação:</h5>
+									<h:outputText value="#{quadro.dataDeCriacao.time}" >
 									<f:convertDateTime pattern="dd/MM/yyyy"
 										timeZone="America/Sao_Paulo" />
 									</h:outputText>

@@ -16,8 +16,6 @@ public class Tarefa implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	private boolean status;
-	
 	private String descricao;
 	
 	//GETTERS AND SETTERS
@@ -28,14 +26,6 @@ public class Tarefa implements Serializable {
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	public boolean isStatus() {
-		return status;
-	}
-
-	public void setStatus(boolean status) {
-		this.status = status;
 	}
 
 	public String getDescricao() {
